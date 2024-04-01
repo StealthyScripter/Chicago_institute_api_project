@@ -33,7 +33,7 @@ async function fetchArtworks() {
           artworksContainer.insertAdjacentHTML('beforeend', artPiece);
         }
       });
-      document.getElementById('prevBtn').addEventListener('click', () = => {
+      document.getElementById('prevBtn').addEventListener('click',(listner) => {
         if (page > 1) {
           page--;
           fetchArtworks();
@@ -44,7 +44,7 @@ async function fetchArtworks() {
         page++;
         fetchArtworks();
       });
-        
+    }   
   } catch (error) {
     console.error('Error fetching artworks:', error);
   }
