@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Art Institute of Chicago</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<div class="nav">
+    <img class="logo" src="./images/bwlogo.png" alt="logo" width="100" height="100">
+    <div class="search-container">
+      <input type="text" placeholder="Search...">
+      <button type="submit">Search</button>
+    </div>
+  
+  <div class = "navbar">
+   <ul>
+      <li> <a href="#home">Home</a></li>
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+  </ul>
+  </div>
+  </div>
+  
+<div class="countdown">
+  <p>The museum opens in:</p>
+  <div id="countdown" class="countdown-timer"></div>
+  <p id="closedMsg" style="display: none;">The museum is closed.</p>
+  <p id="openMsg" style="display: none;">The museum is open!</p>
+</div>
+
+<div id="artworks-container">
+  <!-- API data will be displayed here -->
+</div>
+  
+<script src="script.js"></script>
+</body>
+<footer>
+  <div> 
+    <button type="buytickets">Buy Tickets </button>
+    <p style="font-style: italic;color: cadetblue;">The first hour of everyday is reserved for member-only viewing. Get your membership today and get a hastle free opportunity to view our art and priority on art for sale </p>
+    
+    <ul>
+      <h2>HOURS</h2>
+      <li>Monday: 9:00am - 3:00pm</li>
+      <li>Tuesday - Wednesday: Closed </li>
+      <li>Thursday: 9:00am - 8:00pm </li>
+      <li> Friday - Sunday: 9:am - 5:00pm </li>
+      <li>Holidays: Closed </li>
+    </ul>
+  </div>
+
+    <div>
+    <div >
+      <h2 style="color: cadetblue; font-size: 18px;"> NEWSLETTER </h2>
+      <input type="text" placeholder="Email Address">
+      <button class="footnote"> SIGN UP </button>
+    </div>
+      Join our Weekly Newsletter to receive updates on new releases, special offers, and more.
+  </div>
+</footer>
+
+</html>  
