@@ -63,6 +63,8 @@ body {
   border:none;
   width:90%;
   height:20px;
+  margin-right: 5px;
+  margin-left: 5px;
   }
  input:hover, input:active {
   background-color: hsl(0, 0%, 83%);
@@ -84,8 +86,50 @@ body {
 }
 .main{
   min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.art-framework {
+  background-color: rgb(245, 242, 242);
+  width: calc(33.3% - 20px);
+  margin: 5px;
+  margin-bottom: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #ccc;
+}
+.art-framework img {
+  width: 100%;
+  height: 75%;
+  object-fit: cover;
+  padding: 10px;
+}
+.art-framework p {
+  margin: 5px 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  
+}
+@media screen and (max-width: 768px) {
+  .art-framework {
+    flex: 0 1 calc(45% - 20px);
+  }
 }
 
+@media screen and (max-width: 480px) {
+  .art-framework {
+    flex: 0 1 calc(100% - 20px); /* Full width for smaller screens */
+  }
+}
 footer {
   padding: 15px;
   background-color: white;
@@ -138,4 +182,16 @@ footer ul {
 #footnote {
   margin: 0px;
   padding: 10px;
+}
+.main-collections {
+  min-height: 100vh;
+  width: 100%;
+  display: block;
+  background-color: yellow;
+}
+.main-collections #colllections {
+  background-color: red;;
+  width: 50px;
+  height: 30px;
+  margin: 40px;
 }

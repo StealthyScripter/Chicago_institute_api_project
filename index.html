@@ -19,21 +19,40 @@
     </form>
     <div class="navBar">
       <ul>
-        <li> <a href="#home">Home</a></li>
-        <li><a href="#collections">Collections</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li> <a href="index.html">Home</a></li>
+        <li><a href="#" onclick="loadContent('collections')">Collections</a></li>
+        <li><a href="#" onclick="loadContent('about')">About</a></li>
+        <li><a href="#" onclick="loadContent('contact')">Contact</a></li>
       </ul>
     </div>
   </div>
   </div>
-<div class="main">
+<div class="main" id="content-container">
+<!-- main content goes here -->
+<div class="art-framework">
   <img src="./images/img1.jpg" alt="Art 1">
+  <p> This is the art description for art 1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere incidunt nesciunt corrupti odit accusantium modi deserunt corporis, alias sunt. Accusamus repellat temporibus natus, suscipit quam possimus accusantium! Nobis, assumenda quisquam.</p>
+</div>
+<div class="art-framework" >
+  <img src="./images/img3.jpg" alt="Art 2">
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non dolor alias voluptatibus minima ab quos ut, voluptate suscipit officia laudantium dolorem, itaque consequatur placeat nobis tempore magni laboriosam illum beatae!</p>
+</div>
+<div class="art-framework">
   <img src="./images/img2.webp" alt="Art 2">
+  <p >Lorem ipsum dolor sit amet consectetur adipisicing elit. Non dolor alias voluptatibus minima ab quos ut, voluptate suscipit officia laudantium dolorem, itaque consequatur placeat nobis tempore magni laboriosam illum beatae!</p>
+</div>
+<div class="art-framework">
+  <img src="./images/img4.jpg" alt="Art 2">
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non dolor alias voluptatibus minima ab quos ut, voluptate suscipit officia laudantium dolorem, itaque consequatur placeat nobis tempore magni laboriosam illum beatae!</p>
+</div>
+<div class="art-framework">
   <img src="./images/img1.jpg" alt="Art 1">
-  <img src="./images/img2.webp" alt="Art 2">
-
-  <script src="script.js"></script>
+  <p> This is the art description for art 1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere incidunt nesciunt corrupti odit accusantium modi deserunt corporis, alias sunt. Accusamus repellat temporibus natus, suscipit quam possimus accusantium! Nobis, assumenda quisquam.</p>
+</div>
+<div class="art-framework" >
+  <img src="./images/img3.jpg" alt="Art 2">
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non dolor alias voluptatibus minima ab quos ut, voluptate suscipit officia laudantium dolorem, itaque consequatur placeat nobis tempore magni laboriosam illum beatae!</p>
+</div>
 </div>
 <footer>
     <button id="button-buytickets"> Buy Tickets </button>
@@ -50,10 +69,11 @@
     <div  class="newsletter">
       <button id="newsletter-button"> NEWSLETTER </button>
       <input type="text" placeholder="Email Address">
-      <button> SIGN UP </button>
+      <button type="submit"> SIGN UP </button>
     </div>
       <p id="footnote">Join our Weekly Newsletter to receive updates on new releases, special offers, and more.</p>
   </div>
 </footer>
+<script src="script.js"></script>
 </body>
 </html>  
