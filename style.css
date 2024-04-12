@@ -183,15 +183,124 @@ footer ul {
   margin: 0px;
   padding: 10px;
 }
-.main-collections {
+.main-collections{
   min-height: 100vh;
-  width: 100%;
   display: block;
-  background-color: yellow;
 }
-.main-collections #colllections {
-  background-color: red;;
-  width: 50px;
-  height: 30px;
-  margin: 40px;
+.collections {
+  width: calc(30%-40px);
+  height: 200px;
+  margin: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+#artist-div img {
+  height:80%;
+}
+.collections img {
+  display: block;
+  width: 100%;
+  height: 75%;
+  object-fit: cover;
+  padding: 10px;
+}
+.collections p {
+  font-size: 32px;
+  font-weight: bolder;
+  line-height: 1.5em;
+  letter-spacing: 0.2em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  color: rgb(10, 235, 235);
+  background-color: none;
+  padding: 10px;
+  margin: 0;
+}
+@media screen and (max-width: 768px) {
+  .collections {
+    flex: 0 1 calc(45% - 20px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .collections {
+    flex: 0 1 calc(100% - 20px); /* Full width for smaller screens */
+  }
+}
+#artist-name {
+  font-size: 16px;
+  font-weight: none;
+  line-height: 1em;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(10, 235, 235);
+  padding: 0px;
+  margin: 0px;
+  text-align: center; 
+  position: static;
+  top: auto; 
+  left: auto; 
+  transform: none; 
+  background-color: none;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0px;
+  text-align: center;
+}
+.container h3 {
+  margin: 0px;
+  padding: 0px;
+}
+.container h2 {
+  margin-bottom: 0px;
+}
+.container p{
+  margin: 0;
+}
+.container img {
+  display: block;
+  width: 400px;
+  height: 200px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+  border-radius: 4px;
+
+}
+.message {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+  margin-top: 30px;
+  padding: 10px;
+}
+.message .quotes p {
+  padding: 10px;
+  font-style:italic;
+
+}
+.address {
+  margin-top: 30px;
+  padding: 5px;
+
+}
+.social-media {
+  margin-top: 0px;
+}
+.social-media a {
+  display: inline-block;
+  margin-right: 10px;
+  text-decoration: none;
 }
