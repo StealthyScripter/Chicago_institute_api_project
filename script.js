@@ -6,6 +6,10 @@ function loadContent(page) {
       });
   }
 
+  function loadAndDisplayCollections() {
+    loadContent('collections');
+    extractAndDisplayCollections();
+  }
   
 async function extractAndDisplayAllData() {
   try {
@@ -44,4 +48,39 @@ async function extractAndDisplayAllData() {
   }
 }
 
-extractAndDisplayAllData();
+async function extractAndDisplayCollections() {
+    try {
+      const response = await fetch("https://api.artic.edu/api/v1/artworks?page=1&limit=12");
+      const data = await response.json();
+  
+      if (data && data.data && data.data.length > 0) {
+        const collectionsContainer = document.getElementById('collections-js');
+        if (collectionsContainer) {
+          data.data.forEach(collection => {
+            const image = collection.image_url;
+            const name = collection.name;
+  
+            const div = document.createElement('div');
+            div.classList.add('collections');
+            div.innerHTML = `
+              <img src="${image}" alt="${name}">
+              <p>${name}</p>
+            `;
+            collectionsContainer.appendChild(div);
+          });
+        } else {
+          console.error('Div with id "collections-js" not found.');
+        }
+      } else {
+        console.error('Data is missing or incorrect:', data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    extractAndDisplayCollections();
+    extractAndDisplayAllData();
+});
+
