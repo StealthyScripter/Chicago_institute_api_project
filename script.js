@@ -1,16 +1,20 @@
-function loadMainContent(page) {
+function loadContent(page) {
     fetch(page + '.html')
       .then(response => response.text())
       .then(html => {
         document.getElementById('content-container').innerHTML = html;
-      });
-  }
 
-function loadContent (page) {
-  loadMainContent(page);
-  fetchArtist ();
-        
-}
+
+        if (page === 'artists'){
+            fetchArtist ();
+            
+        } else if (page === 'events') {
+            fetchEvents();
+        }
+    
+    });
+    
+  }
   
 async function extractAndDisplayAllData() {
   try {
@@ -123,7 +127,67 @@ return { canvas, ctx};
 }
 
 
+async function fetchEvents() {
+    try {
+        const response = await fetch("https://api.artic.edu/api/v1/events");
+        const eventsData = await response.json();
 
+        const currentDate = new Date();
+
+        eventsData.data.forEach(single_event => {
+            const event_start_date = new Date(single_event.start_date);
+
+          if (event_start_date >= currentDate) {
+            const event_name = single_event.title;
+            const event_description = single_event.short_description;
+            const event_image = single_event.image_url;
+            const event_access = single_event.buy_button_text;
+            const event_access_cap = single_event.buy_button_caption;
+            const event_location = single_event.location;
+            const event_start_time = single_event.start_time;
+
+            const div = document.createElement('div');
+            div.classList.add('event_container');
+            div.innerHTML = `
+            <div>
+                <h2>${event_name}</h2>
+                <img src="${event_image}" alt="">
+                ${event_description ? `<p>${event_description}</p>` : ''}
+                ${event_start_date ? `<p>${formatDateTime(event_start_date)}  at ${event_start_time}</p>` : ''}
+                ${event_location ? `<p>${event_location}</p>` : ''}
+                ${event_access ? `<button  >${event_access}</button>` : ''}
+            </div>
+            `;
+            const contentContainer = document.getElementById("content-container");
+
+            if (contentContainer) {
+                contentContainer.appendChild(div);
+            } else {
+                console.error('Dive with id "content-container" not found.')
+            }
+
+
+            // document.body.appendChild(div);
+          }
+        });
+    } catch (error) {
+        console.error("Error fetching events:", error);
+    }
+}
+
+function formatDateTime(dateTimeString) {
+    const dateTime = new Date(dateTimeString);
+    
+    const options = { 
+        weekday: dateTime.getDay() ? 'long' : undefined, 
+        year: dateTime.getFullYear() ? 'numeric' : undefined, 
+        month: dateTime.getMonth() !== null ? 'long' : undefined, 
+        day: dateTime.getDate() ? 'numeric' : undefined
+    };
+
+    // Format the date and time
+    return dateTime.toLocaleString(undefined, options);
+}
   
   document.addEventListener('DOMContentLoaded', function() {
     extractAndDisplayAllData();
