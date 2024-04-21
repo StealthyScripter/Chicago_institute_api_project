@@ -86,16 +86,18 @@ body {
 }
 .main{
   min-height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: block;
+  align-items: center;
+  text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 .art-framework {
-  width: calc(30.3% - 20px);
+  width: calc(70%);
   margin: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  margin-right: auto;
+  margin-left:auto;
   text-overflow: ellipsis;
   overflow: hidden;
   position: relative;
@@ -103,19 +105,19 @@ body {
   padding: 10px;
 }
 .art-framework img {
-  width: 100%;
-  height: 30%;
+  width: calc(100%);
+  height: 300px;
   object-fit: cover;
   padding: 10px;
+  border-radius: 1em;
 }
 .art-framework p {
     margin: 0px;
-    padding: 0px;
-    /* background-color: rgba(255, 255, 255, 0.8); */
+    padding: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* white-space: nowrap; */
-    font-size: 12px;
+    font-size: 16px;
+    line-height: 1.5;
   
 }
 @media screen and (max-width: 768px) {
@@ -146,7 +148,7 @@ footer {
     width: 400px;
     height: 50px;
     border:none;
-    border-radius: 1em;
+    border-radius: 0.5em;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -171,13 +173,18 @@ footer ul {
  .newsletter button, .newsletter input {
   flex: 1;
   margin-right: 10px;
-  width: 30px;
  }
   #newsletter-button {
   background-color:white;
   text-align: right;
   border: none;
- }
+  }
+  #submit {
+    border:none;
+    border-radius: 0.4em;
+    height: 30px;
+    width: 80px;
+   }
 #footnote {
   margin: 0px;
   padding: 10px;
@@ -274,7 +281,7 @@ footer ul {
   margin-right: auto;
   margin-left: auto;
   margin-top: 10px;
-  border-radius: 4px;
+  border-radius: 2em;
 
 }
 .message {

@@ -18,7 +18,7 @@ function loadContent(page) {
   
 async function extractAndDisplayAllData() {
   try {
-      const response = await fetch("https://api.artic.edu/api/v1/artworks?page=1&limit=12");
+      const response = await fetch("https://api.artic.edu/api/v1/artworks?page=1&limit=24");
       const data = await response.json();
 
       if (data && data.data && data.data.length > 0) {
@@ -26,19 +26,25 @@ async function extractAndDisplayAllData() {
           if (artContainer) {
               data.data.forEach((artwork, index) => {
                   const image = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/400,/0/default.jpg`;
-                  let description = artwork.description;
-                  if (!description) {
-                      description = `Author: ${artwork.artist_title}`;
-                  } else {
-                      const firstParagraph = description.split('\n\n')[0];
-                      description = firstParagraph;
-                  }
+                  const artTitle = artwork.title;
+                  const artist = artwork.artist_titles;
+                  const artworkType = artwork.artwork_type_title;
+                  const collection = artwork.department_title;
+                  const start = artwork.date_start;
+                  const end = artwork.date_end;
+
 
                   const div = document.createElement('div');
                   div.classList.add('art-framework');
                   div.innerHTML = `
                       <img src="${image}" alt="Art ${index + 1}">
-                      <p>${description}</p>
+                      <p style=font-style:italic;> Title: ${artTitle}</p>
+                     
+                      <p>Artist: ${artist}</p>
+                      <p>Artwork Type: ${artworkType}</p>
+                      <p>Department: ${collection}</p>
+                      <p>${start} - ${end}</p>
+
                   `;
                   artContainer.appendChild(div);
               });
