@@ -3,8 +3,7 @@ function loadContent(page) {
       .then(response => response.text())
       .then(html => {
         document.getElementById('content-container').innerHTML = html;
-
-
+        
         if (page === 'artists'){
             fetchArtist ();
             
