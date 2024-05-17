@@ -12,14 +12,14 @@ body {
   background: url(./images/background.png) no-repeat;
   background-size: cover;
   width: 100%;
-  height: auto;
+  height: 300px;
   margin: 0px;
   display:block;
   overflow:hidden;
 }
 .logo {
-  width: 200px;
-  height: 100px;
+  width: 250px;
+  height: 150px;
   border: none;
   padding: 0;
   opacity: 0.8;
@@ -31,6 +31,8 @@ body {
   display: flex;
  justify-content: space-between;
  align-items: center;
+ margin-top: 100px;
+ margin-bottom: 0;
 }
 .navbar{
   display: flex;
@@ -241,6 +243,11 @@ footer ul {
     flex: 0 1 calc(100% - 20px); /* Full width for smaller screens */
   }
 }
+
+#artistContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
 #artist-name {
   font-size: 16px;
   font-weight: none;
@@ -259,12 +266,14 @@ footer ul {
 }
 
 .container {
+  flex: 1 1 30%;
+  box-sizing: border-box;
   max-width: 800px;
   margin: 0 auto;
   padding: 0px;
   text-align: center;
 }
-.container h3 {
+/* .container h3 {
   margin: 0px;
   padding: 0px;
 }
@@ -273,7 +282,7 @@ footer ul {
 }
 .container p{
   margin: 0;
-}
+} */
 .container img {
   display: block;
   width: 400px;
@@ -354,4 +363,21 @@ margin-bottom: 20px;
 .wendot {
   width: 100%;
   height: 30px;
+}
+
+#pageNumber {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  margin: 20px;
+}
+
+#pageNumber p {
+  color: rgb(13, 13, 119);
+  text-align: center;
+   margin: 0;
+}
+
+#pageNumber button {
+  margin: 0 10px;
 }

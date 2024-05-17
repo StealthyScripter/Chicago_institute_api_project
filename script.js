@@ -1,3 +1,5 @@
+const LIMIT = 100;
+let page = 2;
 function loadContent(page) {
     fetch(page + '.html')
       .then(response => response.text())
@@ -17,14 +19,16 @@ function loadContent(page) {
   
 async function extractAndDisplayAllData() {
   try {
-      const response = await fetch("https://api.artic.edu/api/v1/artworks?page=1&limit=24");
+      const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page}&limit=${LIMIT}`);
       const data = await response.json();
+      console.log(data)
 
       if (data && data.data && data.data.length > 0) {
           const artContainer = document.getElementById('main-art-container');
           if (artContainer) {
               data.data.forEach((artwork, index) => {
-                  const image = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/400,/0/default.jpg`;
+                if (artwork.image_id !== null) {
+                  const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/400,/0/default.jpg`;
                   const artTitle = artwork.title;
                   const artist = artwork.artist_titles;
                   const artworkType = artwork.artwork_type_title;
@@ -36,7 +40,7 @@ async function extractAndDisplayAllData() {
                   const div = document.createElement('div');
                   div.classList.add('art-framework');
                   div.innerHTML = `
-                      <img src="${image}" alt="Art ${index + 1}">
+                      <img src="${imageUrl}" alt="Art ${index + 1}">
                       <p style=font-style:italic;> Title: ${artTitle}</p>
                      
                       <p>Artist: ${artist}</p>
@@ -46,6 +50,7 @@ async function extractAndDisplayAllData() {
 
                   `;
                   artContainer.appendChild(div);
+                }
               });
           } else {
               console.error('Div with id "main-art-container" not found.');
@@ -57,6 +62,7 @@ async function extractAndDisplayAllData() {
       console.error('Error fetching data:', error);
   }
 }
+
 
 async function fetchArtist () {
   try {
@@ -75,7 +81,7 @@ async function fetchArtist () {
 
       if (artistContainer) {
           const div = document.createElement('div');
-              div.classList.add('collections');
+              div.classList.add('container');
               div.innerHTML = `
           <img src="${artist_imageUrl}" alt="${artist_name} picture">
           <p id="artist-name">${artist_name}</p>`;
@@ -196,5 +202,35 @@ function formatDateTime(dateTimeString) {
   
   document.addEventListener('DOMContentLoaded', function() {
     extractAndDisplayAllData();
+    getNumberOfPages();
 });
+
+async function getNumberOfPages() {
+    try {
+        // Fetch data from the API with a limit of 1 to get pagination info
+        const response = await fetch("https://api.artic.edu/api/v1/artworks/search?query[term][is_public_domain]=true&limit=1");
+        const data = await response.json();
+
+        if (data && data.pagination) {
+            const totalPages = data.pagination.total_pages;
+            const totalItems = data.pagination.total;
+            console.log(`Total pages: ${totalPages}`);
+            console.log(`Total items: ${totalItems}`);
+            if (pageNumber) {
+                const div = document.getElementById("pageNumber")
+                div.innerHTML = `
+                <button>Previous</button>
+                <p> Page: ${page} of ${totalPages}</p>
+                <button>Next</button>
+                `
+            }
+        } else {
+            console.error('Pagination information is missing:', data);
+            return 0;
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return 0;
+    }
+}
 
