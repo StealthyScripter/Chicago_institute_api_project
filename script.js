@@ -1,5 +1,8 @@
-const LIMIT = 100;
+const LIMIT = 2;
 let page = 2;
+
+
+
 function loadContent(page) {
     fetch(page + '.html')
       .then(response => response.text())
@@ -11,7 +14,11 @@ function loadContent(page) {
             
         } else if (page === 'events') {
             fetchEvents();
+        
+        } else if (page === 'about') {
+            document.getElementById('pageNumber').style.display = 'none';
         }
+
     
     });
     
@@ -19,15 +26,30 @@ function loadContent(page) {
   
 async function extractAndDisplayAllData() {
   try {
+    const artContainer = document.getElementById('main-art-container');
+    if (artContainer) {
+        artContainer.innerHTML = '';
+    } else {
+        console.error('Div with id "main-art-container" not found.');
+    }
+
       const response = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page}&limit=${LIMIT}`);
       const data = await response.json();
-      console.log(data)
+      const displayedArtworks = new Set();
+      const displayedArtworksTitle = new Set();
+      console.log(displayedArtworksTitle)
 
       if (data && data.data && data.data.length > 0) {
           const artContainer = document.getElementById('main-art-container');
           if (artContainer) {
+
+            let displayedCount = 0;
               data.data.forEach((artwork, index) => {
-                if (artwork.image_id !== null) {
+                
+                if (artwork.image_id !== null && !displayedArtworks.has(artwork.id) && !displayedArtworksTitle.has(artwork.title)) {
+                  displayedArtworks.add(artwork.id);
+                  displayedArtworksTitle.add(artwork.title);
+                  const id = artwork.id;
                   const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/400,/0/default.jpg`;
                   const artTitle = artwork.title;
                   const artist = artwork.artist_titles;
@@ -43,15 +65,27 @@ async function extractAndDisplayAllData() {
                       <img src="${imageUrl}" alt="Art ${index + 1}">
                       <p style=font-style:italic;> Title: ${artTitle}</p>
                      
-                      <p>Artist: ${artist}</p>
+                      <p>Artist: ${artist} ${id}</p>
                       <p>Artwork Type: ${artworkType}</p>
                       <p>Department: ${collection}</p>
                       <p>${start} - ${end}</p>
 
                   `;
                   artContainer.appendChild(div);
+
+                  displayedCount ++;
+
+                  if (displayedCount >= LIMIT) {
+                    return;
+                  }
+
                 }
               });
+              if (displayedCount < LIMIT) {
+                page++;
+                extractAndDisplayAllData();
+              }
+              document.getElementById('pageNumber').style.display = 'flex';
           } else {
               console.error('Div with id "main-art-container" not found.');
           }
@@ -86,6 +120,7 @@ async function fetchArtist () {
           <img src="${artist_imageUrl}" alt="${artist_name} picture">
           <p id="artist-name">${artist_name}</p>`;
           artistContainer.appendChild(div);
+          document.getElementById('pageNumber').style.display = 'none';
           } else {
           console.error('Div with id "artist Container" not found.');
           }
@@ -144,11 +179,14 @@ async function fetchEvents() {
         const eventsData = await response.json();
 
         const currentDate = new Date();
+        let eventsAdded = false;
 
         eventsData.data.forEach(single_event => {
             const event_start_date = new Date(single_event.start_date);
 
           if (event_start_date >= currentDate) {
+            eventsAdded = true;
+
             const event_name = single_event.title;
             const event_description = single_event.short_description;
             const event_image = single_event.image_url;
@@ -170,6 +208,7 @@ async function fetchEvents() {
             </div>
             `;
             const contentContainer = document.getElementById("content-container");
+            document.getElementById('pageNumber').style.display = 'none';
 
             if (contentContainer) {
                 contentContainer.appendChild(div);
@@ -177,10 +216,17 @@ async function fetchEvents() {
                 console.error('Dive with id "content-container" not found.')
             }
 
-
-            // document.body.appendChild(div);
           }
         });
+        if (!eventsAdded) {
+            const contentContainer = document.getElementById("content-container");
+            if (contentContainer) {
+                const noEventsMessage = document.createElement('div');
+                noEventsMessage.classList.add('no_events_message');
+                noEventsMessage.innerHTML = `<p>There No upcoming events</p>`;
+                contentContainer.appendChild(noEventsMessage);
+            }
+        }
     } catch (error) {
         console.error("Error fetching events:", error);
     }
@@ -205,6 +251,7 @@ function formatDateTime(dateTimeString) {
     getNumberOfPages();
 });
 
+let totalPages;
 async function getNumberOfPages() {
     try {
         // Fetch data from the API with a limit of 1 to get pagination info
@@ -212,17 +259,20 @@ async function getNumberOfPages() {
         const data = await response.json();
 
         if (data && data.pagination) {
-            const totalPages = data.pagination.total_pages;
+            totalPages = data.pagination.total_pages;
             const totalItems = data.pagination.total;
-            console.log(`Total pages: ${totalPages}`);
-            console.log(`Total items: ${totalItems}`);
             if (pageNumber) {
                 const div = document.getElementById("pageNumber")
                 div.innerHTML = `
-                <button>Previous</button>
+                <button id="previous" onclick="advancePages('previous')">Previous</button>
                 <p> Page: ${page} of ${totalPages}</p>
-                <button>Next</button>
-                `
+                <button id = "next" onclick="advancePages('next')">Next</button>
+                `;
+                if (page === 1) {
+                    document.getElementById('previous').style.display = 'none';
+                } else if (page === totalPages) {
+                    document.getElementById('next').style.display = 'none';
+                }
             }
         } else {
             console.error('Pagination information is missing:', data);
@@ -233,4 +283,14 @@ async function getNumberOfPages() {
         return 0;
     }
 }
-
+function advancePages(command) {
+   if (command === "next" && page !== totalPages) {
+        page ++;
+        extractAndDisplayAllData();
+    } else if (command === "previous" && page !== 1) {
+        page --;
+        extractAndDisplayAllData();
+       
+    }
+    
+}

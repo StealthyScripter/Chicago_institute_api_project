@@ -366,7 +366,7 @@ margin-bottom: 20px;
 }
 
 #pageNumber {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items:center;
   margin: 20px;
