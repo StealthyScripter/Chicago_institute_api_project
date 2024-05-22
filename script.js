@@ -1,4 +1,4 @@
-const LIMIT = 2;
+const LIMIT = 24;
 let page = 2;
 
 
@@ -37,7 +37,6 @@ async function extractAndDisplayAllData() {
       const data = await response.json();
       const displayedArtworks = new Set();
       const displayedArtworksTitle = new Set();
-      console.log(displayedArtworksTitle)
 
       if (data && data.data && data.data.length > 0) {
           const artContainer = document.getElementById('main-art-container');
@@ -96,6 +95,15 @@ async function extractAndDisplayAllData() {
       console.error('Error fetching data:', error);
   }
 }
+
+async function createArtHomeHeading () {
+    const div = document.createElement('div')
+    div.classList.add('art-home-heading');
+    div.innerHTML = `
+    <h1>Artworks</h1>
+    `
+}
+
 
 
 async function fetchArtist () {
@@ -249,6 +257,8 @@ function formatDateTime(dateTimeString) {
   document.addEventListener('DOMContentLoaded', function() {
     extractAndDisplayAllData();
     getNumberOfPages();
+    createArtHomeHeading ();
+    console.log( getNumberOfPages());
 });
 
 let totalPages;
